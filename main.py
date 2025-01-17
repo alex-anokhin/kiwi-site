@@ -29,34 +29,6 @@ def index():
         # emoji_response = pdf2qa_our(technical_content, prompt)
         user_id = request.cookies.get('user_id', str(uuid.uuid4()))
 
-        # response = make_response(
-        #     render_template('index.html', response=emoji_response))
-        # response.set_cookie('user_id', user_id, max_age=30 * 24 * 60 *
-        #                     60)  # Set a cookie to remember the user's ID
-
-        # Save the input and output to Airtable
-        # headers = {
-        #     'Authorization': f'Bearer {AIRTABLE_API_KEY}',
-        #     'Content-Type': 'application/json'
-        # }
-        # data = {
-        #     "records": [{
-        #         "fields": {
-        #             "User ID": user_id,
-        #             "Input": prompt,
-        #             "Output": emoji_response,
-        #             "Submit time": datetime.utcnow().isoformat()
-        #         }
-        #     }]
-        # }
-
-        # Send data to Airtable and handle errors
-        # r = requests.post(AIRTABLE_TRANSLATOR_API_URL,
-        #                   headers=headers,
-        #                   json=data)
-        # if r.status_code not in [200, 201]:
-        #     print(f'Error storing input in Airtable: {r.status_code}')
-
         return None  #response
     else:
         # Render index page for GET requests
@@ -80,16 +52,6 @@ def contact():
             # 'Authorization': f'Bearer {AIRTABLE_API_KEY}',
             'Content-Type': 'application/json'
         }
-        # data = {
-        #     "records": [{
-        #         "fields": {
-        #             "name": name,
-        #             "email": email,
-        #             "message": message,
-        #             "timestamp": submit_time
-        #         }
-        #     }]
-        # }
         data = {
             "name": name,
             "email": email,
@@ -99,7 +61,7 @@ def contact():
 
         # Send data to Airtable and handle response
         # r = requests.post(AIRTABLE_CONTACTS_API_URL,
-        r = requests.post("CONTACT_API",
+        r = requests.post(CONTACT_API,
                           headers=headers,
                           json=data)
         if r.status_code in [200, 201]:

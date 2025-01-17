@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    
+    <title>KIWI - engineering intelligence</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    
+  </head>
+  <body>
+    {% include 'header.html' %}
+    <div class="first-section-translator">
+      <div class="norrow-center-section">
+        <br>
+        <h1>Subscribe to our waitlist to get best price!</h1>
+        <p>Get early access 👇</p>
+        <div class="gray-box" id="input-box">
+          {% if not success %}
+          <form action="/contact" method="POST" class="subscribe-form">
+            <input class="contact-form" type="text" id="name" name="name" placeholder="Your name...">
+            <input class="contact-form" type="email" id="email" name="email" placeholder="Your email...">
+            <!-- <textarea id="message" name="message" rows="5" cols="30" placeholder="Your message..."></textarea> -->
+            <button class="button" type="submit">Subscribe!</button>
+          </form>
+          {% elif request.method == 'POST' and success %}
+            <p style="margin: 2rem 1rem;">{{ message }}</p>
+          {% endif %}
+        </div>
+      </div>
+      <br>
+    </div>
+    
+    {% include 'footer.html' %}
+  </body>
+</html>

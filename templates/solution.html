@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Add your own Google tag manager (gtag.js) 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WC5KT96S7W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-WC5KT96S7W');
+    </script> -->
+    <meta charset="UTF-8">
+
+    <title>KIWI - engineering intelligence</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <link rel="icon" href="static/favicon.ico" type="image/x-icon">
+    <style>
+      .loading {
+          display: none;
+          font-size: 1.2em;
+          color: #555;
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+          const form = document.querySelector(".ask-form");
+          const btn = document.querySelector(".ask-btn");
+          const loadingText = document.getElementById("loading-text");
+
+          form.addEventListener("submit", (event) => {
+              // Show the loading message when the form is submitted
+            btn.style.display = "none";  
+            loadingText.style.display = "block";
+            loadingText.textContent = "Loading";
+            let dots = 0;
+            loadingInterval = setInterval(() => {
+                dots = (dots + 1) % 4; // Cycle through 0, 1, 2, 3
+                loadingText.textContent = "Loading" + ".".repeat(dots);
+            }, 500);
+          });
+
+          form.addEventListener("reset", () => {
+            clearInterval(loadingInterval);
+            loadingText.style.display = "none";
+              btn.style.display = "block";
+          });
+      });
+    </script>
+  </head>
+  <body>
+    {% include 'header.html' %}
+    
+    <div class="first-section-translator">
+      <div class="norrow-center-section">
+        <br>
+        <h1>Chat with your E-Knowhow</h1> 
+        <p>Ask questions about the document!</p>
+
+        <!-- Single Input Dialog Box -->
+        <div class="gray-box" class="input-box" id="input-box">
+          <h3>Ask a Question Related to this test.pdf <a href="static/files/radar_5/radar_5_origin.pdf" target="_blank" title="Open PDF"><span>📑</span></a> </h3>
+          
+          <div style="text-align: left; margin: 1rem 0rem; border: 1px solid #ddd; border-radius:.5rem; background-color: #eee">
+            <a href="#" style="text-decoration: none; color: inherit" onclick="document.getElementById('prompt').value = `Why Infineon can be trusted partner for 77GHz automotive Radar?`;">
+              <p style="margin: 0; padding: .5rem; font-size: 1rem; font-weight: bold;">Why Infineon can be trusted partner for 77GHz automotive Radar? </p>
+            </a>
+          </div>
+
+          <div style="text-align: left; margin: .5rem 0rem; border: 1px solid #ddd; border-radius:.5rem; background-color: #eee">
+            <a href="#" style="text-decoration: none; color: inherit" onclick="document.getElementById('prompt').value = `How does the CARKIT looks like? What's the key characteristics of it`;">
+              <p style="margin: 0; padding: .5rem; font-size: 1rem; font-weight: bold;">How does the CARKIT looks like? What's the key characteristics of it? </p>
+            </a>
+          </div>
+
+          <div style="text-align: left; margin: .5rem 0rem 1rem; border: 1px solid #ddd; border-radius:.5rem; background-color: #eee">
+            <a href="#" style="text-decoration: none; color: inherit" onclick="document.getElementById('prompt').value = `Kannst du mir den Bild von CTRX P2S board geben? `;">
+              <p style="margin: 0; padding: .5rem; font-size: 1rem; font-weight: bold;">Kannst du mir den Bild von 'CTRX P2S board' geben? </p>
+            </a>
+          </div>
+  
+          <form class="ask-form" method="POST" action="/solution">
+            <textarea class="prompt" id="prompt" name="prompt" rows="5" cols="33" placeholder="Enter your question..."></textarea>
+            
+            <button class="button ask-btn" type="submit">Ask</button>
+          <p id="loading-text" class="loading" style="margin: 0; align-self: flex-start;">Loading...</p>
+        </div>
+          </form>
+         <!-- Response Section -->
+        {% if response or response2 %}
+        <div class="response-container output-box">
+          <div class="side-by-side-responses">
+            <!-- First Response Box -->
+            <div class="gray-box1" class="response-box-2" id="response-box-1">
+              <h3>ChatGPT</h3>
+              <p id="response-text-1">{{ response1 }}</p>
+              <button class="button" onclick="copyToClipboard('response-text-1')">Copy</button>
+            </div>
+
+            <!-- Second Response Box -->
+            <div class="gray-box1" class="response-box-2" id="response-box-2">
+              <h3>Our Model</h3>
+              <p id="response-text-2">
+              {{ response2.text }} <br> 
+              {% if response2.img %}
+                  <img src="{{ url_for('static', filename='files/radar_5/' ~ response2.img) }}" alt="Image" style="max-height: 300px; max-width: 300px"> <br>
+              {% else %}
+                  <span><br>No image available</span><br>
+              {% endif %}
+              </p>
+              <button class="button" onclick="copyToClipboard('response-text-2')">Copy</button>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 3rem 1rem;">
+          <h2>Subscribe to the waitlist to get a best price!</h2>
+        <button style="text-align: center;" class="button" onclick="window.location.href='/contact'">Subscribe</button>
+          </div>
+
+        <!-- {% if response or response2 %}
+          <div class="gray-box" id="output-box">
+            <p id="output-text">{{ response }}</p>
+            <button class="button" onclick="copyToClipboard('output-text')">Copy to clipboard</button>
+          </div>
+        {% endif %} -->
+        <br>
+        
+      </div>
+    </div>
+
+
+    {% include 'footer.html' %}
+    <script>
+      function copyToClipboard(id) {
+        const response = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(response)
+          .then(() => {
+            console.log('Copied to clipboard:', response);
+          })
+          .catch(err => {
+            console.error('Failed to copy to clipboard:', err);
+          });
+      }
+    </script>
+  </body>
+</html>

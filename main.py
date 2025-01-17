@@ -12,6 +12,9 @@ from config import (
     AIRTABLE_TRANSLATOR_API_URL,
 )
 
+import os
+CONTACT_API = os.getenv('CONTACT_API')
+
 app = Flask(__name__)  # Initialize the Flask application (your server)
 
 
@@ -96,7 +99,7 @@ def contact():
 
         # Send data to Airtable and handle response
         # r = requests.post(AIRTABLE_CONTACTS_API_URL,
-        r = requests.post("https://hook.eu2.make.com/vl1jkoa2hrjj2dh7xwidrmgevp3lra4h",
+        r = requests.post("CONTACT_API",
                           headers=headers,
                           json=data)
         if r.status_code in [200, 201]:

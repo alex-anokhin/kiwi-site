@@ -1,7 +1,8 @@
 from openai import OpenAI
-from config import API_KEY
+# from config import API_KEY
 from openai.types.beta.threads.message_create_params import Attachment, AttachmentToolFileSearch
-
+import os
+API_KEY = os.getenv('API_KEY')
 # QUESTION prompt to ask ChatGPT to respond with only emojis
 QUESTION_PROMPT = "I have a document about radar in PDF. "
 

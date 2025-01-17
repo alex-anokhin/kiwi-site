@@ -13,4 +13,6 @@ COPY --chown=user ./requirements.txt requirements.txt
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 COPY --chown=user . /app
+RUN --mount=type=secret,id=API_KEY,mode=0444,required=true
+
 CMD ["python", "main.py"]

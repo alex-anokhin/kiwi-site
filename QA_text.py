@@ -1,7 +1,8 @@
 from openai import OpenAI
-from config import API_KEY
+# from config import API_KEY
 import re
-
+import os
+API_KEY = os.getenv('API_KEY')
 # QUESTION prompt to ask ChatGPT to respond with only emojis
 QUESTION_PROMPT_1 = "This is the markdown file of the radar official technical document."
 

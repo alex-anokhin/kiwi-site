@@ -1,6 +1,7 @@
 import openai
 from openai import OpenAI
-from config import API_KEY
+import os
+API_KEY = os.getenv('API_KEY')
 
 # QUESTION prompt to ask ChatGPT to respond with only emojis
 QUESTION = "If this text was an emoji, what would it be? Do not use any written words, only emojis: "

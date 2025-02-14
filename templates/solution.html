@@ -14,7 +14,7 @@
 
     <title>KIWI - engineering intelligence | Solution</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="static/styles.css">
 
     <link rel="icon" href="static/favicon.ico" type="image/x-icon">
     <style>
@@ -29,9 +29,14 @@
           const form = document.querySelector(".ask-form");
           const btn = document.querySelector(".ask-btn");
           const loadingText = document.getElementById("loading-text");
+		  const reply = document.querySelector(".response-container");
 
           form.addEventListener("submit", (event) => {
-              // Show the loading message when the form is submitted
+			let loadingInterval;
+			// Clear previos response
+			if (reply) {
+				reply.style.display = "none";
+			}
             btn.style.display = "none";  
             loadingText.style.display = "block";
             loadingText.textContent = "Loading";
@@ -48,6 +53,7 @@
               btn.style.display = "block";
           });
       });
+
     </script>
   </head>
   <body>
@@ -95,21 +101,21 @@
             <!-- First Response Box -->
             <div class="gray-box1" class="response-box-2" id="response-box-1">
               <h3>ChatGPT</h3>
-              <p id="response-text-1">{{ response1 }}</p>
+              <div id="response-text-1">{{ response1|safe }}</div>
               <button class="button" onclick="copyToClipboard('response-text-1')">Copy</button>
             </div>
 
             <!-- Second Response Box -->
             <div class="gray-box1" class="response-box-2" id="response-box-2">
               <h3>Our Model</h3>
-              <p id="response-text-2">
-              {{ response2.text }} <br> 
-              {% if response2.img %}
-                  <img src="{{ url_for('static', filename='files/radar_5/' ~ response2.img) }}" alt="Image" style="max-height: 300px; max-width: 300px"> <br>
+              <div id="response-text-2">
+              {{ response2.text|safe }} <br> 
+              {% if response2.img|safe %}
+                  <img src="static/files/radar_5/{{ response2.img }}" alt="Image" style="max-height: 300px; max-width: 300px"> <br>
               {% else %}
                   <span><br>No image available</span><br>
               {% endif %}
-              </p>
+              </div>
               <button class="button" onclick="copyToClipboard('response-text-2')">Copy</button>
             </div>
           </div>

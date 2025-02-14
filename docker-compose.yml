@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      secrets:
+        - API_KEY
+        - CONTACT_API
+    secrets:
+      - API_KEY
+      - CONTACT_API
+    ports:
+      - "8080:7860" # Host:Container
+
+secrets:
+  API_KEY:
+    file: ./secrets/api_key.txt
+  CONTACT_API:
+    file: ./secrets/contact_api.txt

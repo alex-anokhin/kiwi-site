@@ -394,6 +394,6 @@ footer {
     gap: 10px; /* Reduce spacing between boxes */
   }
   .gray-box {
-    /* width: 100%; /* Full width for each box on small screens */ */
+		width: 100%; /* Full width for each box on small screens */
   }
 }

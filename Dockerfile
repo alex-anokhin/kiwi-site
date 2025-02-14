@@ -16,4 +16,6 @@ COPY --chown=user . /app
 RUN --mount=type=secret,id=API_KEY,mode=0444,required=true\
     --mount=type=secret,id=CONTACT_API,mode=0444,required=true
 
+EXPOSE 7860
+
 CMD ["python", "main.py"]
